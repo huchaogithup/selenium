@@ -16,7 +16,7 @@ public class PicUtil {
         System.load("C:\\Users\\Administrator\\IdeaProjects\\pachong\\opencv_java411.dll");
     }
 
-    public Mat mergePic(List<byte[]> bytes,String fileName){
+    public static Mat mergePic(List<byte[]> bytes,String fileName){
         if(bytes.size()==0){
             return null;
         }

@@ -1,14 +1,11 @@
 package com.huachao.selenium;
 
 import org.openqa.selenium.PageLoadStrategy;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ChromeDriverUtil {
     private volatile static ChromeDriver chromeDriver;
@@ -31,18 +28,27 @@ public class ChromeDriverUtil {
         if(webDriverWait==null){
             synchronized (ChromeDriverUtil.class){
                 if(webDriverWait==null){
-                    webDriverWait=new WebDriverWait(getChromeDriver(),50);
+                    webDriverWait=new WebDriverWait(getChromeDriver(),20);
                 }
             }
         }
         return webDriverWait;
     }
-    public static void main(String[] args) {
 
+    public static void click(WebElement webElement){
+        webDriverWait.until(w->{
+            try {
+                webElement.click();
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        });
     }
 
     private static ChromeDriver newInstant(){
         ChromeOptions chromeOptions=new ChromeOptions();
+        chromeOptions.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS,true);
         chromeOptions.setPageLoadStrategy(PageLoadStrategy.NONE);
         return new ChromeDriver(chromeOptions);
     }
